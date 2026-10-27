@@ -47,7 +47,7 @@
       <div class="flex items-center gap-2.5">
         <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
         <strong>Redigeringsläge aktivt:</strong>
-        <span class="text-amber-200 hidden sm:inline">Klicka direkt på valfri streckad text (öppettider, meny, erbjudande) för att ändra den.</span>
+        <span class="text-amber-200 hidden sm:inline">Klicka direkt på texten i Menyn, Öppettiderna eller Veckans Erbjudande för att ändra den.</span>
       </div>
       <div class="flex items-center gap-2">
         <button id="toggle-offer-btn" type="button" onclick="toggleOfferVisibility()" class="bg-amber-800 hover:bg-amber-700 border border-amber-600 text-white font-semibold px-3 py-1.5 rounded-lg transition">
@@ -109,11 +109,11 @@
       </div>
 
       <!-- Kort, varm och klassisk rubrik -->
-      <h1 data-editable="hero-title" class="font-serif text-4xl sm:text-6xl font-bold tracking-tight mb-6 leading-[1.12] text-stone-50">
+      <h1 class="font-serif text-4xl sm:text-6xl font-bold tracking-tight mb-6 leading-[1.12] text-stone-50">
         Rykande plankstek &amp; <span class="italic font-semibold text-amber-300">äkta krogkänsla</span>
       </h1>
 
-      <p data-editable="hero-lead" class="text-stone-300/90 text-base sm:text-lg mb-10 max-w-xl mx-auto leading-relaxed font-normal">
+      <p class="text-stone-300/90 text-base sm:text-lg mb-10 max-w-xl mx-auto leading-relaxed font-normal">
         Välkommen in i värmen på Söders Krog. Här serverar vi generösa plankstekar med spritsat duchessemos, vällagade kött- och fiskrätter och kall dryck i en familjär och avslappnad miljö.
       </p>
 
@@ -130,19 +130,19 @@
       <div class="mt-16 pt-8 border-t border-stone-800/80 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
         <div>
           <p class="text-[11px] text-stone-400 uppercase tracking-widest">Signatur</p>
-          <p data-editable="fact-1" class="font-serif text-lg font-semibold text-amber-200/90 mt-0.5">Klassiska Plankor</p>
+          <p class="font-serif text-lg font-semibold text-amber-200/90 mt-0.5">Klassiska Plankor</p>
         </div>
         <div>
           <p class="text-[11px] text-stone-400 uppercase tracking-widest">Prisnivå</p>
-          <p data-editable="fact-2" class="font-serif text-lg font-semibold text-stone-200 mt-0.5">200–300 kr</p>
+          <p class="font-serif text-lg font-semibold text-stone-200 mt-0.5">200–300 kr</p>
         </div>
         <div>
           <p class="text-[11px] text-stone-400 uppercase tracking-widest">Sommartid</p>
-          <p data-editable="fact-3" class="font-serif text-lg font-semibold text-stone-200 mt-0.5">Uteservering</p>
+          <p class="font-serif text-lg font-semibold text-stone-200 mt-0.5">Uteservering</p>
         </div>
         <div>
           <p class="text-[11px] text-stone-400 uppercase tracking-widest">För alla</p>
-          <p data-editable="fact-4" class="font-serif text-lg font-semibold text-stone-200 mt-0.5">Barnmeny finns</p>
+          <p class="font-serif text-lg font-semibold text-stone-200 mt-0.5">Barnmeny finns</p>
         </div>
       </div>
     </div>
@@ -177,37 +177,37 @@
     <div class="bg-white rounded-3xl p-8 sm:p-12 border border-stone-200/80 shadow-sm grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
       <div class="md:col-span-7 space-y-4">
         <span class="text-xs font-semibold uppercase tracking-[0.2em] text-amber-800">Kvarterskrogen på Söder</span>
-        <h2 data-editable="about-heading" class="font-serif text-3xl sm:text-4xl font-bold text-stone-900 leading-tight">
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-stone-900 leading-tight">
           Vällagad mat utan krångel – i en varm och familjär miljö
         </h2>
-        <p data-editable="about-p1" class="text-stone-600 leading-relaxed">
+        <p class="text-stone-600 leading-relaxed">
           På Rådhusgatan 107 i Östersund har Söders Krog under många år varit en självklar mötesplats för både stammisar och besökare. Hit kommer man för att slå sig ner i lugn och ro, njuta av en nylagad planka eller à la carte-rätt och känna sig som hemma.
         </p>
-        <p data-editable="about-p2" class="text-stone-600 leading-relaxed">
+        <p class="text-stone-600 leading-relaxed">
           Under sköna sommarkvällar öppnar vi upp vår blomstrande <strong>uteservering</strong>, och inne i matsalen väntar alltid personlig service, rejäla portioner och varm stämning.
         </p>
       </div>
 
       <div class="md:col-span-5 bg-[#1c1816] text-stone-100 p-8 rounded-2xl border border-stone-800 space-y-5">
-        <h3 data-editable="about-box-title" class="font-serif text-2xl font-semibold text-amber-300/90 border-b border-stone-800 pb-3">
+        <h3 class="font-serif text-2xl font-semibold text-amber-300/90 border-b border-stone-800 pb-3">
           Det här kännetecknar oss
         </h3>
         <ul class="space-y-3.5 text-sm text-stone-300">
           <li class="flex items-start gap-3">
             <span class="text-amber-500 mt-0.5">✦</span>
-            <span data-editable="about-li-1"><strong class="text-stone-100">Rykande plankstekar</strong> – Oxfilé, fläskfilé, kyckling eller fisk på ekplanka.</span>
+            <span><strong class="text-stone-100">Rykande plankstekar</strong> – Oxfilé, fläskfilé, kyckling eller fisk på ekplanka.</span>
           </li>
           <li class="flex items-start gap-3">
             <span class="text-amber-500 mt-0.5">✦</span>
-            <span data-editable="about-li-2"><strong class="text-stone-100">Välj storlek efter aptit</strong> – Flera av våra plankor kan anpassas i storlek.</span>
+            <span><strong class="text-stone-100">Välj storlek efter aptit</strong> – Flera av våra plankor kan anpassas i storlek.</span>
           </li>
           <li class="flex items-start gap-3">
             <span class="text-amber-500 mt-0.5">✦</span>
-            <span data-editable="about-li-3"><strong class="text-stone-100">Fullständiga rättigheter</strong> – Välkyld fatöl, goda viner och alkoholfria alternativ.</span>
+            <span><strong class="text-stone-100">Fullständiga rättigheter</strong> – Välkyld fatöl, goda viner och alkoholfria alternativ.</span>
           </li>
           <li class="flex items-start gap-3">
             <span class="text-amber-500 mt-0.5">✦</span>
-            <span data-editable="about-li-4"><strong class="text-stone-100">Uteservering &amp; Barnmeny</strong> – En välkomnande krog för både par, vänner och familjer.</span>
+            <span><strong class="text-stone-100">Uteservering &amp; Barnmeny</strong> – En välkomnande krog för både par, vänner och familjer.</span>
           </li>
         </ul>
       </div>
@@ -357,7 +357,7 @@
           <div class="space-y-5 text-sm text-stone-700">
             <div>
               <p class="text-[11px] font-semibold uppercase tracking-widest text-stone-400">Adress</p>
-              <p data-editable="contact-address" class="font-medium text-base text-stone-900 mt-0.5">
+              <p class="font-medium text-base text-stone-900 mt-0.5">
                 Rådhusgatan 107, 831 45 Östersund
               </p>
             </div>
@@ -373,7 +373,7 @@
 
             <div>
               <p class="text-[11px] font-semibold uppercase tracking-widest text-stone-400">Hos oss finns</p>
-              <p data-editable="contact-services" class="text-stone-600 mt-0.5">
+              <p class="text-stone-600 mt-0.5">
                 Servering • Avhämtning • Uteservering • Barnmeny
               </p>
             </div>
