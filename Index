@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="sv" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[Restaurangens Namn] - God mat & lunch i [Stad]</title>
+  <!-- Tailwind CSS CDN för snabb och ren styling utan byggsteg -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-stone-50 text-stone-800 antialiased font-sans">
+
+  <!-- Flytande snabbknapp för mobilen (syns alltid längst ner i tumhöjd) -->
+  <div class="fixed bottom-4 left-4 right-4 z-50 md:hidden">
+    <a href="tel:063XXXXXX" class="block w-full text-center bg-amber-600 hover:bg-amber-700 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-amber-900/20 active:scale-95 transition">
+      📞 Ring & Boka / Beställ
+    </a>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-stone-200">
+    <div class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="#" class="font-extrabold text-xl tracking-tight text-stone-900">
+        [Restaurangens Namn]
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="#lunch" class="hover:text-amber-600 transition">Dagens Lunch</a>
+        <a href="#meny" class="hover:text-amber-600 transition">Meny</a>
+        <a href="#kontakt" class="hover:text-amber-600 transition">Öppettider & Kontakt</a>
+        <a href="tel:063XXXXXX" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg font-semibold transition">
+          Ring 063-XX XX XX
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero-sektion -->
+  <section class="relative bg-stone-900 text-white py-16 px-4 sm:py-24">
+    <div class="max-w-3xl mx-auto text-center">
+      <span class="inline-block px-3 py-1 bg-amber-600/30 text-amber-300 rounded-full text-xs font-semibold tracking-wider uppercase mb-4">
+        Välkommen till [Restaurangens Namn]
+      </span>
+      <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4">
+        Äkta smaker och lunch i hjärtat av [Stad]
+      </h1>
+      <p class="text-stone-300 text-lg mb-8 max-w-xl mx-auto">
+        Klassiska rätter lagade från grunden med lokala råvaror. Ät här hos oss eller beställ för avhämtning.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="#lunch" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-6 py-3 rounded-xl transition text-center">
+          Se Dagens Lunch
+        </a>
+        <a href="#kontakt" class="bg-white/10 hover:bg-white/20 text-white font-semibold px-6 py-3 rounded-xl transition text-center">
+          Öppettider & Hitta hit
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sektion: Dagens Lunch -->
+  <section id="lunch" class="py-16 px-4 max-w-3xl mx-auto">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl font-bold tracking-tight text-stone-900">Veckans Lunch</h2>
+      <p class="text-stone-500 mt-2">Serveras vardagar 11:00 – 14:00. Salladsbuffé, bröd, dryck och kaffe ingår.</p>
+      <p class="text-amber-600 font-bold mt-1">Pris: 125 kr</p>
+    </div>
+
+    <div class="space-y-4">
+      <!-- Måndag -->
+      <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Måndag</span>
+        <h3 class="font-bold text-lg text-stone-900 mt-1">Klassisk Wallenbergare</h3>
+        <p class="text-stone-600 text-sm mt-1">Serveras med potatispuré, rårörda lingon, gröna ärtor och skirat smör.</p>
+      </div>
+
+      <!-- Tisdag -->
+      <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Tisdag</span>
+        <h3 class="font-bold text-lg text-stone-900 mt-1">Stekt fläsk med raggmunk</h3>
+        <p class="text-stone-600 text-sm mt-1">Alternativt stekt fläsk med löksås och kokt potatis.</p>
+      </div>
+
+      <!-- Onsdag -->
+      <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Onsdag</span>
+        <h3 class="font-bold text-lg text-stone-900 mt-1">Ugnsbakad laxfilé</h3>
+        <p class="text-stone-600 text-sm mt-1">Serveras med dill- och citronsås, kokt potatis och rostade rotfrukter.</p>
+      </div>
+
+      <!-- Torsdag -->
+      <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Torsdag</span>
+        <h3 class="font-bold text-lg text-stone-900 mt-1">Ärtsoppa & Pannkakor</h3>
+        <p class="text-stone-600 text-sm mt-1">Klassisk ärtsoppa med fläsk, serveras med tunna pannkakor, sylt och grädde.</p>
+      </div>
+
+      <!-- Fredag -->
+      <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Fredag</span>
+        <h3 class="font-bold text-lg text-stone-900 mt-1">Helstekt ryggbiff</h3>
+        <p class="text-stone-600 text-sm mt-1">Serveras med potatisgratäng, rödvinssås och bearnaise.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sektion: Öppettider & Kontakt -->
+  <section id="kontakt" class="bg-stone-100 py-16 px-4 border-t border-stone-200">
+    <div class="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div>
+        <h3 class="text-xl font-bold text-stone-900 mb-3">Öppettider</h3>
+        <ul class="space-y-2 text-stone-600 text-sm">
+          <li class="flex justify-between border-b border-stone-200 pb-1">
+            <span>Måndag – Fredag:</span>
+            <span class="font-medium text-stone-900">11:00 – 21:00</span>
+          </li>
+          <li class="flex justify-between border-b border-stone-200 pb-1">
+            <span>Lördag:</span>
+            <span class="font-medium text-stone-900">12:00 – 22:00</span>
+          </li>
+          <li class="flex justify-between pb-1">
+            <span>Söndag:</span>
+            <span class="font-medium text-stone-900">Stängt</span>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-bold text-stone-900 mb-3">Hitta hit & Kontakt</h3>
+        <p class="text-stone-600 text-sm mb-4">
+          Storgatan 12<br>
+          831 30 Östersund
+        </p>
+        <p class="text-stone-600 text-sm mb-4">
+          Telefon: <a href="tel:063XXXXXX" class="font-bold text-amber-700 underline">063-XX XX XX</a><br>
+          E-post: info@restaurangensnamn.se
+        </p>
+        <a href="https://maps.google.com" target="_blank" class="inline-block text-xs font-semibold text-stone-500 underline hover:text-stone-800">
+          Öppna i Google Maps →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sidfot -->
+  <footer class="bg-stone-900 text-stone-400 py-8 text-center text-xs pb-24 md:pb-8">
+    <p>© 2026 [Restaurangens Namn]. Alla rättigheter förbehållna.</p>
+  </footer>
+
+</body>
+</html>
