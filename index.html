@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="sv" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Söders Krog – Klassisk kvarterskrog & plankstek i Östersund</title>
+  <meta name="description" content="Välkommen till Söders Krog på Rådhusgatan 107 i Östersund. En varm och familjär kvarterskrog känd för sina rykande plankstekar, à la carte, fiskrätter och mysiga uteservering.">
+  <!-- Google Fonts för varm och klassisk krogkänsla -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Visuell markering när redigeringsläget är aktivt */
+    body.edit-mode [data-editable] {
+      outline: 2px dashed rgba(217, 119, 6, 0.65);
+      outline-offset: 4px;
+      border-radius: 6px;
+      cursor: text;
+      transition: all 0.15s ease;
+    }
+    body.edit-mode [data-editable]:hover,
+    body.edit-mode [data-editable]:focus {
+      outline: 2px solid #d97706;
+      background-color: rgba(254, 243, 199, 0.15);
+    }
+  </style>
+</head>
+<body class="bg-[#faf8f5] text-stone-800 antialiased font-sans selection:bg-amber-700 selection:text-white">
+
+  <!-- ADMIN / REDIGERINGSLIST (Visas endast när man är inloggad i redigeringsläge) -->
+  <div id="admin-toolbar" class="hidden fixed top-0 left-0 right-0 z-50 bg-amber-900 text-amber-50 border-b border-amber-700 shadow-xl px-4 py-3">
+    <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
+      <div class="flex items-center gap-2.5">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <strong>Redigeringsläge aktivt:</strong>
+        <span class="text-amber-200 hidden sm:inline">Klicka direkt på valfri streckad text (öppettider, meny, erbjudande) för att ändra den.</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="toggle-offer-btn" type="button" onclick="toggleOfferVisibility()" class="bg-amber-800 hover:bg-amber-700 border border-amber-600 text-white font-semibold px-3 py-1.5 rounded-lg transition">
+          Dölj/Visa Veckans Erbjudande
+        </button>
+        <button type="button" onclick="resetEditableContent()" class="bg-stone-800 hover:bg-stone-700 text-stone-200 px-3 py-1.5 rounded-lg transition">
+          Återställ original
+        </button>
+        <button type="button" onclick="saveAndExitEditMode()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg shadow transition">
+          ✓ Spara &amp; Avsluta
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flytande snabbknapp för mobilen -->
+  <div class="fixed bottom-4 left-4 right-4 z-40 md:hidden">
+    <a href="tel:0635543489" class="flex items-center justify-center gap-2 w-full text-center bg-amber-700 hover:bg-amber-800 text-amber-50 font-semibold py-3.5 px-4 rounded-xl shadow-lg shadow-stone-950/30 active:scale-95 transition">
+      <span>📞</span>
+      <span>Boka bord: 063-554 34 89</span>
+    </a>
+  </div>
+
+  <!-- Header: Diskret mörkblå/varm-guld blinkning till krogens skylt längst upp -->
+  <header class="sticky top-0 z-40 bg-[#16192b]/95 backdrop-blur-md border-b border-amber-500/20 text-stone-100">
+    <div class="max-w-5xl mx-auto px-4 h-20 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3.5 group">
+        <!-- Stilren och nedtonad tolkning av den klassiska skylten -->
+        <span class="inline-flex items-center justify-center px-4 py-1 rounded-full bg-amber-300/95 text-[#5c1919] font-serif italic font-bold text-2xl tracking-tight border border-amber-100/80 shadow-sm group-hover:bg-amber-200 transition">
+          Söders Krog
+        </span>
+        <span class="hidden sm:inline-block text-[11px] text-amber-200/70 uppercase tracking-[0.2em] font-medium">
+          Östersund
+        </span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-stone-300">
+        <a href="#erbjudande" class="hover:text-amber-300 transition">Erbjudande</a>
+        <a href="#om-oss" class="hover:text-amber-300 transition">Om krogen</a>
+        <a href="#meny" class="hover:text-amber-300 transition">Meny &amp; Plankor</a>
+        <a href="#kontakt" class="hover:text-amber-300 transition">Öppettider &amp; Kontakt</a>
+        <a href="tel:0635543489" class="bg-amber-600/90 hover:bg-amber-600 text-white px-4 py-2 rounded-lg font-semibold transition border border-amber-400/30">
+          063-554 34 89
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero-sektion: Mysig mörk krogmiljö med en subtil ton av midnattsblått & varmt guld längst upp -->
+  <section class="relative bg-[#171513] text-stone-100 py-20 px-4 sm:py-28 overflow-hidden border-b border-stone-800">
+    <!-- Mjuk övergång från midnattsblått högst upp till varm mörk mahogny/sten -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1e2440]/70 via-[#1a1614] to-[#120f0d]"></div>
+
+    <div class="relative max-w-3xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2.5 px-4 py-1.5 bg-white/5 border border-amber-400/25 text-amber-200/90 rounded-full text-xs font-medium tracking-wider uppercase mb-6">
+        <span class="text-amber-400">Ons–Lör från 16:00</span>
+        <span class="text-stone-600">•</span>
+        <span>Rådhusgatan 107, Östersund</span>
+      </div>
+
+      <!-- Kort, varm och klassisk rubrik -->
+      <h1 data-editable="hero-title" class="font-serif text-4xl sm:text-6xl font-bold tracking-tight mb-6 leading-[1.12] text-stone-50">
+        Rykande plankstek &amp; <span class="italic font-semibold text-amber-300">äkta krogkänsla</span>
+      </h1>
+
+      <p data-editable="hero-lead" class="text-stone-300/90 text-base sm:text-lg mb-10 max-w-xl mx-auto leading-relaxed font-normal">
+        Välkommen in i värmen på Söders Krog. Här serverar vi generösa plankstekar med spritsat duchessemos, vällagade kött- och fiskrätter och kall dryck i en familjär och avslappnad miljö.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#meny" class="bg-amber-600 hover:bg-amber-500 text-white font-semibold px-8 py-3.5 rounded-xl transition text-center shadow-lg shadow-black/30">
+          Utforska vår meny
+        </a>
+        <a href="tel:0635543489" class="bg-stone-800/80 hover:bg-stone-800 border border-stone-700 text-stone-200 font-medium px-8 py-3.5 rounded-xl transition text-center">
+          Boka bord: 063-554 34 89
+        </a>
+      </div>
+
+      <!-- Diskreta snabbfakta -->
+      <div class="mt-16 pt-8 border-t border-stone-800/80 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+        <div>
+          <p class="text-[11px] text-stone-400 uppercase tracking-widest">Signatur</p>
+          <p data-editable="fact-1" class="font-serif text-lg font-semibold text-amber-200/90 mt-0.5">Klassiska Plankor</p>
+        </div>
+        <div>
+          <p class="text-[11px] text-stone-400 uppercase tracking-widest">Prisnivå</p>
+          <p data-editable="fact-2" class="font-serif text-lg font-semibold text-stone-200 mt-0.5">200–300 kr</p>
+        </div>
+        <div>
+          <p class="text-[11px] text-stone-400 uppercase tracking-widest">Sommartid</p>
+          <p data-editable="fact-3" class="font-serif text-lg font-semibold text-stone-200 mt-0.5">Uteservering</p>
+        </div>
+        <div>
+          <p class="text-[11px] text-stone-400 uppercase tracking-widest">För alla</p>
+          <p data-editable="fact-4" class="font-serif text-lg font-semibold text-stone-200 mt-0.5">Barnmeny finns</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sektion: Veckans Erbjudande / Aktuellt på krogen (Kan redigeras & döljas/visas i adminläget) -->
+  <section id="erbjudande" class="pt-14 px-4 max-w-4xl mx-auto">
+    <div class="relative bg-gradient-to-br from-[#1c1816] via-[#231d19] to-[#171412] text-stone-100 rounded-3xl p-8 sm:p-10 border border-amber-500/30 shadow-md overflow-hidden">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="space-y-2 max-w-2xl">
+          <span data-editable="offer-badge" class="inline-block text-[11px] font-semibold uppercase tracking-[0.2em] text-amber-300 bg-amber-500/10 border border-amber-400/25 px-3 py-1 rounded-full">
+            ✦ Veckans Erbjudande &amp; Aktuellt
+          </span>
+          <h2 data-editable="offer-title" class="font-serif text-3xl sm:text-4xl font-bold text-white pt-1">
+            Klassisk Plankstek &amp; Kvällens Dryck
+          </h2>
+          <p data-editable="offer-desc" class="text-stone-300 text-sm sm:text-base leading-relaxed">
+            Välkommen in till oss i veckan! Njut av vår nygjorda fläskfilé- eller fiskplanka med spritsat duchessemos, bearnaise och grillade primörer. Boka gärna bord på 063-554 34 89.
+          </p>
+        </div>
+        <div class="shrink-0 bg-stone-950/70 border border-amber-400/20 rounded-2xl px-6 py-4 text-center">
+          <p data-editable="offer-price-label" class="text-[11px] uppercase tracking-widest text-stone-400">Kampanjpris</p>
+          <p data-editable="offer-price" class="font-serif text-3xl font-bold text-amber-300 mt-0.5">Från 219 kr</p>
+          <p data-editable="offer-sub" class="text-xs text-stone-400 mt-1">Gäller ons–lör från kl. 16:00</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sektion: Om Söders Krog (Varm och ombonad) -->
+  <section id="om-oss" class="py-16 px-4 max-w-5xl mx-auto">
+    <div class="bg-white rounded-3xl p-8 sm:p-12 border border-stone-200/80 shadow-sm grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
+      <div class="md:col-span-7 space-y-4">
+        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-amber-800">Kvarterskrogen på Söder</span>
+        <h2 data-editable="about-heading" class="font-serif text-3xl sm:text-4xl font-bold text-stone-900 leading-tight">
+          Vällagad mat utan krångel – i en varm och familjär miljö
+        </h2>
+        <p data-editable="about-p1" class="text-stone-600 leading-relaxed">
+          På Rådhusgatan 107 i Östersund har Söders Krog under många år varit en självklar mötesplats för både stammisar och besökare. Hit kommer man för att slå sig ner i lugn och ro, njuta av en nylagad planka eller à la carte-rätt och känna sig som hemma.
+        </p>
+        <p data-editable="about-p2" class="text-stone-600 leading-relaxed">
+          Under sköna sommarkvällar öppnar vi upp vår blomstrande <strong>uteservering</strong>, och inne i matsalen väntar alltid personlig service, rejäla portioner och varm stämning.
+        </p>
+      </div>
+
+      <div class="md:col-span-5 bg-[#1c1816] text-stone-100 p-8 rounded-2xl border border-stone-800 space-y-5">
+        <h3 data-editable="about-box-title" class="font-serif text-2xl font-semibold text-amber-300/90 border-b border-stone-800 pb-3">
+          Det här kännetecknar oss
+        </h3>
+        <ul class="space-y-3.5 text-sm text-stone-300">
+          <li class="flex items-start gap-3">
+            <span class="text-amber-500 mt-0.5">✦</span>
+            <span data-editable="about-li-1"><strong class="text-stone-100">Rykande plankstekar</strong> – Oxfilé, fläskfilé, kyckling eller fisk på ekplanka.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-amber-500 mt-0.5">✦</span>
+            <span data-editable="about-li-2"><strong class="text-stone-100">Välj storlek efter aptit</strong> – Flera av våra plankor kan anpassas i storlek.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-amber-500 mt-0.5">✦</span>
+            <span data-editable="about-li-3"><strong class="text-stone-100">Fullständiga rättigheter</strong> – Välkyld fatöl, goda viner och alkoholfria alternativ.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-amber-500 mt-0.5">✦</span>
+            <span data-editable="about-li-4"><strong class="text-stone-100">Uteservering &amp; Barnmeny</strong> – En välkomnande krog för både par, vänner och familjer.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sektion: Klassisk Meny & Plankor -->
+  <section id="meny" class="py-12 px-4 max-w-4xl mx-auto">
+    <div class="text-center mb-14">
+      <span class="text-xs font-semibold uppercase tracking-[0.2em] text-amber-800">Från vårt kök</span>
+      <h2 data-editable="menu-heading" class="font-serif text-4xl sm:text-5xl font-bold text-stone-900 mt-2">
+        Plankor, Fisk &amp; À la Carte
+      </h2>
+      <div class="w-16 h-0.5 bg-amber-700/40 mx-auto my-4"></div>
+      <p data-editable="menu-intro" class="text-stone-600 max-w-xl mx-auto text-sm sm:text-base">
+        Klassiska rätter lagade från grunden med omsorg och generösa tillbehör. Normal prisnivå för varmrätt är <strong class="text-stone-800">200–300 kr</strong>.
+      </p>
+    </div>
+
+    <!-- Menykort med klassisk restaurangkänsla -->
+    <div class="bg-white rounded-3xl p-8 sm:p-12 border border-stone-200/90 shadow-sm mb-10">
+      <div class="text-center border-b border-stone-200 pb-6 mb-8">
+        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">Husets Stolthet</span>
+        <h3 data-editable="plank-heading" class="font-serif text-3xl font-bold text-stone-900 mt-1">Våra Klassiska Plankstekar</h3>
+        <p data-editable="plank-sub" class="text-xs sm:text-sm text-stone-500 mt-1 italic">
+          Serveras på rykande ekplanka med spritsat duchessemos, grillad tomat och varma grönsaker
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
+        <!-- Oxfiléplanka -->
+        <div class="border-b border-stone-100 pb-6">
+          <div class="flex justify-between items-baseline gap-2">
+            <h4 data-editable="dish-1-name" class="font-serif text-2xl font-bold text-stone-900">Oxfiléplanka</h4>
+            <span data-editable="dish-1-tag" class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-0.5 bg-amber-50 text-amber-900 border border-amber-200/60 rounded-full">Favorit</span>
+          </div>
+          <p data-editable="dish-1-desc" class="text-stone-600 text-sm mt-2 leading-relaxed">
+            Mör grillad oxfilé med gyllengräddat duchessemos, fyllig rödvinssås, klassisk bearnaisesås och varma primörer.
+          </p>
+        </div>
+
+        <!-- Fisk- / Rödingplanka -->
+        <div class="border-b border-stone-100 pb-6">
+          <div class="flex justify-between items-baseline gap-2">
+            <h4 data-editable="dish-2-name" class="font-serif text-2xl font-bold text-stone-900">Fisk- &amp; Rödingplanka</h4>
+            <span data-editable="dish-2-tag" class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-0.5 bg-stone-100 text-stone-700 rounded-full">Från vattnet</span>
+          </div>
+          <p data-editable="dish-2-desc" class="text-stone-600 text-sm mt-2 leading-relaxed">
+            Smörstekt fiskfilé på planka med spritsat potatismos, len vitvins- och dillsås, varma grönsaker och citron.
+          </p>
+        </div>
+
+        <!-- Fläskfiléplanka -->
+        <div class="border-b border-stone-100 pb-6 md:border-b-0 md:pb-0">
+          <div class="flex justify-between items-baseline gap-2">
+            <h4 data-editable="dish-3-name" class="font-serif text-2xl font-bold text-stone-900">Fläskfiléplanka</h4>
+            <span data-editable="dish-3-tag" class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-0.5 bg-stone-100 text-stone-700 rounded-full">Klassiker</span>
+          </div>
+          <p data-editable="dish-3-desc" class="text-stone-600 text-sm mt-2 leading-relaxed">
+            Saftig grillad fläskfilé på ekplanka med duchessemos, hemlagad bearnaisesås, rödvinssky och grillade grönsaker.
+          </p>
+        </div>
+
+        <!-- Kycklingplanka -->
+        <div>
+          <div class="flex justify-between items-baseline gap-2">
+            <h4 data-editable="dish-4-name" class="font-serif text-2xl font-bold text-stone-900">Kycklingplanka</h4>
+            <span data-editable="dish-4-tag" class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-0.5 bg-stone-100 text-stone-700 rounded-full">Mild &amp; krämig</span>
+          </div>
+          <p data-editable="dish-4-desc" class="text-stone-600 text-sm mt-2 leading-relaxed">
+            Grillad kycklingfilé på ekplanka med spritsat duchessemos, krämig sås, varma grönsaker och grillad tomat.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-stone-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-sm text-stone-600">
+        <p data-editable="plank-note" class="italic">Hos oss kan du ofta välja storlek på din planka efter aptit – fråga oss gärna vid beställning.</p>
+        <a href="tel:0635543489" class="font-semibold text-amber-800 hover:text-amber-900 underline shrink-0">Ring 063-554 34 89 →</a>
+      </div>
+    </div>
+
+    <!-- Övriga menykategorier -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white p-7 rounded-2xl border border-stone-200/80 shadow-sm">
+        <span class="text-[11px] font-semibold uppercase tracking-[0.15em] text-amber-800">À La Carte</span>
+        <h3 data-editable="cat-1-title" class="font-serif text-2xl font-bold text-stone-900 mt-1 mb-2.5">Kött- &amp; Grillrätter</h3>
+        <p data-editable="cat-1-desc" class="text-stone-600 text-sm leading-relaxed">
+          Klassiska upplägg med bland annat ryggbiff, oxfilé eller fläskfilé, serverade med krispiga pommes frites eller potatisgratäng, bearnaise och sallad.
+        </p>
+      </div>
+
+      <div class="bg-white p-7 rounded-2xl border border-stone-200/80 shadow-sm">
+        <span class="text-[11px] font-semibold uppercase tracking-[0.15em] text-amber-800">Fisk &amp; Grönt</span>
+        <h3 data-editable="cat-2-title" class="font-serif text-2xl font-bold text-stone-900 mt-1 mb-2.5">Fiskrätter &amp; Sallader</h3>
+        <p data-editable="cat-2-desc" class="text-stone-600 text-sm leading-relaxed">
+          Smörstekt röding och lax med krämiga såser samt matiga sallader för dig som önskar något fräscht och lättare.
+        </p>
+      </div>
+
+      <div class="bg-white p-7 rounded-2xl border border-stone-200/80 shadow-sm">
+        <span class="text-[11px] font-semibold uppercase tracking-[0.15em] text-amber-800">För hela sällskapet</span>
+        <h3 data-editable="cat-3-title" class="font-serif text-2xl font-bold text-stone-900 mt-1 mb-2.5">Barnmeny &amp; Dryck</h3>
+        <p data-editable="cat-3-desc" class="text-stone-600 text-sm leading-relaxed">
+          Anpassade barnportioner för de yngre gästerna. I baren serveras välkyld fatöl, husets vin, cider och alkoholfria alternativ.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Sektion: Öppettider & Kontakt -->
+  <section id="kontakt" class="py-20 px-4">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Öppettider (Alla dagar & tider är direkt redigerbara i adminläget) -->
+      <div class="bg-white p-8 sm:p-10 rounded-3xl border border-stone-200/90 shadow-sm">
+        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-amber-800">Tider</span>
+        <h3 class="font-serif text-3xl font-bold text-stone-900 mt-1 mb-6">Öppettider</h3>
+        <ul class="space-y-3.5 text-stone-600 text-sm">
+          <li class="flex justify-between border-b border-stone-100 pb-3">
+            <span data-editable="hours-day-1">Måndag – Tisdag</span>
+            <span data-editable="hours-time-1" class="text-stone-400">Stängt</span>
+          </li>
+          <li class="flex justify-between border-b border-stone-100 pb-3">
+            <span data-editable="hours-day-2">Onsdag – Torsdag</span>
+            <span data-editable="hours-time-2" class="font-semibold text-stone-900">Från 16:00</span>
+          </li>
+          <li class="flex justify-between border-b border-stone-100 pb-3">
+            <span data-editable="hours-day-3">Fredag – Lördag</span>
+            <span data-editable="hours-time-3" class="font-semibold text-stone-900">16:00 – 22:00</span>
+          </li>
+          <li class="flex justify-between pb-1">
+            <span data-editable="hours-day-4">Söndag</span>
+            <span data-editable="hours-time-4" class="text-stone-400">Stängt</span>
+          </li>
+        </ul>
+        <p data-editable="hours-note" class="mt-6 text-xs text-stone-500 bg-[#faf8f5] p-4 rounded-xl border border-stone-200/70 leading-relaxed">
+          Öppettider kan variera efter säsong och helgdagar. Ring oss gärna på 063-554 34 89 för att boka bord eller stämma av kvällens tider.
+        </p>
+      </div>
+
+      <!-- Kontakt & Adress -->
+      <div class="bg-white p-8 sm:p-10 rounded-3xl border border-stone-200/90 shadow-sm flex flex-col justify-between">
+        <div>
+          <span class="text-xs font-semibold uppercase tracking-[0.2em] text-amber-800">Hitta hit</span>
+          <h3 class="font-serif text-3xl font-bold text-stone-900 mt-1 mb-6">Besök &amp; Boka bord</h3>
+
+          <div class="space-y-5 text-sm text-stone-700">
+            <div>
+              <p class="text-[11px] font-semibold uppercase tracking-widest text-stone-400">Adress</p>
+              <p data-editable="contact-address" class="font-medium text-base text-stone-900 mt-0.5">
+                Rådhusgatan 107, 831 45 Östersund
+              </p>
+            </div>
+
+            <div>
+              <p class="text-[11px] font-semibold uppercase tracking-widest text-stone-400">Telefon</p>
+              <p class="mt-0.5">
+                <a href="tel:0635543489" class="font-serif font-bold text-2xl text-amber-800 hover:text-amber-900 underline">
+                  063-554 34 89
+                </a>
+              </p>
+            </div>
+
+            <div>
+              <p class="text-[11px] font-semibold uppercase tracking-widest text-stone-400">Hos oss finns</p>
+              <p data-editable="contact-services" class="text-stone-600 mt-0.5">
+                Servering • Avhämtning • Uteservering • Barnmeny
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-stone-100 flex flex-wrap gap-3">
+          <a href="https://www.google.com/maps/search/?api=1&query=S%C3%B6ders+Krog+R%C3%A5dhusgatan+107+831+45+%C3%96stersund" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold px-5 py-3.5 rounded-xl transition">
+            <span>Visa på Google Maps</span>
+            <span>→</span>
+          </a>
+          <a href="tel:0635543489" class="inline-flex items-center gap-2 bg-amber-700 hover:bg-amber-800 text-white text-xs font-semibold px-5 py-3.5 rounded-xl transition">
+            <span>Ring 063-554 34 89</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sidfot med diskret personal-knapp för redigering -->
+  <footer class="bg-[#12100e] text-stone-400 py-12 text-center text-xs pb-28 md:pb-12 border-t border-stone-800">
+    <div class="max-w-5xl mx-auto px-4 space-y-2">
+      <p class="font-serif text-lg font-semibold text-stone-200">Söders Krog</p>
+      <p>Rådhusgatan 107, 831 45 Östersund • <a href="tel:0635543489" class="text-amber-400/90 hover:underline">063-554 34 89</a></p>
+      <div class="pt-3 flex items-center justify-center gap-4 text-stone-600">
+        <span>© 2026 Söders Krog. Alla rättigheter förbehållna.</span>
+        <span>•</span>
+        <button type="button" onclick="openAdminLogin()" class="text-stone-500 hover:text-amber-400 underline transition">
+          🔒 Personal / Redigera sida
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- INLOGGNINGSRUTA FÖR REDIGERINGSLÄGE -->
+  <div id="admin-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white text-stone-900 rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-stone-200">
+      <h3 class="font-serif text-2xl font-bold text-stone-900">Personalinloggning</h3>
+      <p class="text-xs text-stone-500 mt-1">
+        Ange PIN-kod för att redigera öppettider, veckans erbjudande och menyn. (Standardkod: <strong>1234</strong>)
+      </p>
+      <input id="admin-pin-input" type="password" placeholder="Ange PIN-kod..." class="mt-4 w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-600 text-sm">
+      <p id="admin-error" class="hidden text-xs text-red-600 mt-2">Fel PIN-kod, försök igen.</p>
+      <div class="mt-5 flex justify-end gap-2">
+        <button type="button" onclick="closeAdminLogin()" class="px-4 py-2 rounded-xl text-xs font-semibold text-stone-600 hover:bg-stone-100">
+          Avbryt
+        </button>
+        <button type="button" onclick="verifyAdminPin()" class="px-5 py-2 rounded-xl text-xs font-semibold bg-amber-700 hover:bg-amber-800 text-white">
+          Logga in
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKRIPT FÖR REDIGERING AV ÖPPETTIDER, VECKANS ERBJUDANDE & MENY -->
+  <script>
+    const STORAGE_KEY = 'soders_krog_content_v1';
+    const OFFER_VISIBILITY_KEY = 'soders_krog_offer_visible_v1';
+    const ADMIN_PIN = '1234';
+
+    // Ladda sparade ändringar vid sidstart
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedData = localStorage.getItem(STORAGE_KEY);
+      if (savedData) {
+        try {
+          const parsed = JSON.parse(savedData);
+          Object.keys(parsed).forEach(key => {
+            const el = document.querySelector(`[data-editable="${key}"]`);
+            if (el) el.innerHTML = parsed[key];
+          });
+        } catch (e) {
+          console.error('Kunde inte läsa sparade ändringar:', e);
+        }
+      }
+
+      const offerVisible = localStorage.getItem(OFFER_VISIBILITY_KEY);
+      const offerSection = document.getElementById('erbjudande');
+      if (offerVisible === 'false' && offerSection) {
+        offerSection.classList.add('hidden');
+      }
+    });
+
+    function openAdminLogin() {
+      if (document.body.classList.contains('edit-mode')) {
+        saveAndExitEditMode();
+        return;
+      }
+      document.getElementById('admin-modal').classList.remove('hidden');
+      document.getElementById('admin-error').classList.add('hidden');
+      const input = document.getElementById('admin-pin-input');
+      input.value = '';
+      setTimeout(() => input.focus(), 50);
+    }
+
+    function closeAdminLogin() {
+      document.getElementById('admin-modal').classList.add('hidden');
+    }
+
+    function verifyAdminPin() {
+      const pin = document.getElementById('admin-pin-input').value.trim();
+      if (pin === ADMIN_PIN) {
+        closeAdminLogin();
+        enableEditMode();
+      } else {
+        document.getElementById('admin-error').classList.remove('hidden');
+      }
+    }
+
+    // Tillåt Enter-tangent i PIN-rutan
+    document.getElementById('admin-pin-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') verifyAdminPin();
+    });
+
+    function enableEditMode() {
+      document.body.classList.add('edit-mode');
+      document.getElementById('admin-toolbar').classList.remove('hidden');
+      document.querySelectorAll('[data-editable]').forEach(el => {
+        el.setAttribute('contenteditable', 'true');
+      });
+    }
+
+    function saveAndExitEditMode() {
+      const data = {};
+      document.querySelectorAll('[data-editable]').forEach(el => {
+        const key = el.getAttribute('data-editable');
+        data[key] = el.innerHTML;
+        el.removeAttribute('contenteditable');
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      document.body.classList.remove('edit-mode');
+      document.getElementById('admin-toolbar').classList.add('hidden');
+    }
+
+    function toggleOfferVisibility() {
+      const offerSection = document.getElementById('erbjudande');
+      if (!offerSection) return;
+      const isHidden = offerSection.classList.toggle('hidden');
+      localStorage.setItem(OFFER_VISIBILITY_KEY, isHidden ? 'false' : 'true');
+    }
+
+    function resetEditableContent() {
+      if (confirm('Vill du återställa alla texter och öppettider till originalet?')) {
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(OFFER_VISIBILITY_KEY);
+        window.location.reload();
+      }
+    }
+  </script>
+
+</body>
+</html>
