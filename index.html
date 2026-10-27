@@ -85,7 +85,7 @@
       </a>
 
       <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-stone-300">
-        <a href="#erbjudande" class="hover:text-amber-300 transition">Erbjudande</a>
+        <a href="#erbjudande" id="nav-erbjudande" class="hover:text-amber-300 transition">Erbjudande</a>
         <a href="#om-oss" class="hover:text-amber-300 transition">Om krogen</a>
         <a href="#meny" class="hover:text-amber-300 transition">Meny &amp; Plankor</a>
         <a href="#kontakt" class="hover:text-amber-300 transition">Öppettider &amp; Kontakt</a>
@@ -451,10 +451,22 @@
 
       const offerVisible = localStorage.getItem(OFFER_VISIBILITY_KEY);
       const offerSection = document.getElementById('erbjudande');
-      if (offerVisible === 'false' && offerSection) {
-        offerSection.classList.add('hidden');
+      const offerNav = document.getElementById('nav-erbjudande');
+      if (offerVisible === 'false') {
+        if (offerSection) offerSection.classList.add('hidden');
+        if (offerNav) offerNav.classList.add('hidden');
       }
+      updateOfferButtonText();
     });
+
+    function updateOfferButtonText() {
+      const btn = document.getElementById('toggle-offer-btn');
+      const offerSection = document.getElementById('erbjudande');
+      if (btn && offerSection) {
+        const isHidden = offerSection.classList.contains('hidden');
+        btn.textContent = isHidden ? 'Visa Veckans Erbjudande' : 'Dölj Veckans Erbjudande';
+      }
+    }
 
     function openAdminLogin() {
       if (document.body.classList.contains('edit-mode')) {
@@ -509,9 +521,14 @@
 
     function toggleOfferVisibility() {
       const offerSection = document.getElementById('erbjudande');
+      const offerNav = document.getElementById('nav-erbjudande');
       if (!offerSection) return;
       const isHidden = offerSection.classList.toggle('hidden');
+      if (offerNav) {
+        offerNav.classList.toggle('hidden', isHidden);
+      }
       localStorage.setItem(OFFER_VISIBILITY_KEY, isHidden ? 'false' : 'true');
+      updateOfferButtonText();
     }
 
     function resetEditableContent() {
